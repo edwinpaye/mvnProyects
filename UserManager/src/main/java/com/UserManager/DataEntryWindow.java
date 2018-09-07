@@ -8,6 +8,7 @@ public class DataEntryWindow extends javax.swing.JFrame {
     public DataEntryWindow(UserManager newUserManager, EditionWindow newEditionWindow) {
         userManager = newUserManager;
         editionWindow = newEditionWindow;
+        editionWindow.enableButtons(false);
         initComponents();
     }
 
@@ -75,6 +76,7 @@ public class DataEntryWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        editionWindow.enableButtons(true);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
