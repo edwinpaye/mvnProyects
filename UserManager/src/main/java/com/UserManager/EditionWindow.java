@@ -15,21 +15,21 @@ public class EditionWindow extends javax.swing.JFrame {
         initComponents();
     }
     
-    private Object[][] getInformation(){
-        userList = userManager.ListarResultado();
-        Object[][] listOfInformation = new Object[userList.size()][5];
-        for (int i = 0; i < userList.size(); i++) {
-                listOfInformation[i][0] = userList.get(i).getId_user();
-                listOfInformation[i][1] = userList.get(i).getNombre();
-                listOfInformation[i][2] = userList.get(i).getApellido();
-                listOfInformation[i][3] = userList.get(i).getEdad();
-                listOfInformation[i][4] = userList.get(i).getTelefono();
+    private Object[][] getInformation(ArrayList<Usuario> newUserList){
+        Object[][] listOfInformation = new Object[newUserList.size()][etiquetas.length];
+        for (int i = 0; i < newUserList.size(); i++) {
+                listOfInformation[i][0] = newUserList.get(i).getId_user();
+                listOfInformation[i][1] = newUserList.get(i).getNombre();
+                listOfInformation[i][2] = newUserList.get(i).getApellido();
+                listOfInformation[i][3] = newUserList.get(i).getEdad();
+                listOfInformation[i][4] = newUserList.get(i).getTelefono();
         }
         return listOfInformation;
     }
     
-    private void setDataTable(){
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(getInformation(), etiquetas));
+    public void setDataTable(ArrayList<Usuario> newUserList){
+        userList = newUserList;
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(getInformation(newUserList), etiquetas));
     }
 
     /**
@@ -125,9 +125,16 @@ public class EditionWindow extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
+    public EditionWindow getWindow(){
+        return this;
+    }
+    
     private void btnSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchUserActionPerformed
-        // TODO add your handling code here:
-        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new DataEntryWindow(userManager, getWindow()).setVisible(true);
+            }
+        });
     }//GEN-LAST:event_btnSearchUserActionPerformed
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
@@ -139,13 +146,14 @@ public class EditionWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddUserActionPerformed
 
     private void btnUserListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserListActionPerformed
-        setDataTable();
+        setDataTable(userManager.ListarResultado());
     }//GEN-LAST:event_btnUserListActionPerformed
 
     private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
-        if (jTable1.getSelectedRow() > -1 && JOptionPane.showConfirmDialog(null, "Confirm deleted?", "Confirm exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if (jTable1.getSelectedRow() > -1 && JOptionPane.showConfirmDialog(null, "Confirm deleted?", "Confirm deleted", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             userManager.RemoveUser(userList.get(jTable1.getSelectedRow()).getId_user());
-            setDataTable();
+            setDataTable(userManager.ListarResultado());
+
         }
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 
