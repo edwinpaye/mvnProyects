@@ -144,7 +144,6 @@ public class UserManager {
     
     public ArrayList<Usuario> search(String data){
         try {
-//            EjecutarConsulta(data);
             resultSet = connectSql.Connect().createStatement().executeQuery("select * from users where "+data);
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
