@@ -12,7 +12,6 @@ public class UserManager {
     private ResultSet resultSet;
     private ResultSetMetaData rsultado;
     private ArrayList<Usuario> lista;
-//    private String[]etiquetas;
     
     public UserManager(ConectionSql connectSql) {
         this.connectSql=connectSql;
@@ -52,9 +51,9 @@ public class UserManager {
         }
     }
     
-    public void EjecutarConsulta(String columnName, String data) {
+    public void EjecutarConsulta(String data) {
         try {
-            Consultar("select * from users where "+columnName+" = "+data);
+            Consultar("select * from users where "+data);
             this.resultSet = preparedStatement.executeQuery();
         } catch (Exception e) {
             MessageEmergent("Fail EjecutarConsulta(): "+e.getMessage());
@@ -93,18 +92,10 @@ public class UserManager {
     public String[] ListarEtiquetas() {         
         try {
             EjecutarConsulta();
-//            resultSet.getMetaData();
             rsultado = resultSet.getMetaData();
-//            etiquetas= new String[rsultado.getColumnCount()];
-//            etiquetas[0] = rsultado.getColumnName(1);
-//            etiquetas[1] = rsultado.getColumnName(2);
-//            etiquetas[2] = rsultado.getColumnName(3);
-//            etiquetas[3] = rsultado.getColumnName(4);
-//            etiquetas[4] = rsultado.getColumnName(5);
             ExitConection();
             return new String[]{rsultado.getColumnName(1), rsultado.getColumnName(2),
             rsultado.getColumnName(3), rsultado.getColumnName(4), rsultado.getColumnName(5)};
-//            return etiquetas;
         } catch (Exception e) {
             MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
         }
@@ -114,7 +105,6 @@ public class UserManager {
     public void AddUser(Usuario newUsuario) {
         try {
             Consultar("INSERT INTO users (name, lastname, age, phone) VALUES (?,?,?,?)");
-//            preparedStatement.setString(1, id_usuario);
             preparedStatement.setString(1, newUsuario.getNombre());
             preparedStatement.setString(2, newUsuario.getApellido());
             preparedStatement.setInt(3, newUsuario.getEdad());
@@ -144,7 +134,6 @@ public class UserManager {
             preparedStatement.setString(2, newUsuario.getApellido());
             preparedStatement.setInt(3, newUsuario.getEdad());
             preparedStatement.setInt(4, newUsuario.getTelefono());
-//            preparedStatement.setInt(5, salario);
             preparedStatement.setInt(5, id);
             preparedStatement.executeUpdate();
             MessageEmergent("Edit User: "+newUsuario.getNombre()+" "+newUsuario.getApellido());
@@ -153,9 +142,10 @@ public class UserManager {
         }
     }
     
-    public ArrayList<Usuario> search(String columnName, String data){
+    public ArrayList<Usuario> search(String data){
         try {
-            EjecutarConsulta(columnName, data);
+//            EjecutarConsulta(data);
+            resultSet = connectSql.Connect().createStatement().executeQuery("select * from users where name = jesu");
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
                 lista.add(new Usuario(this.resultSet.getInt("id"),this.resultSet.getString("name"),
@@ -164,7 +154,7 @@ public class UserManager {
             ExitConection();
             return lista;
         } catch (Exception e) {
-            MessageEmergent("Fail ListarResultado(): "+e.getLocalizedMessage());
+            MessageEmergent("Fail search(): "+e.getLocalizedMessage());
         }
         return lista;
     }
