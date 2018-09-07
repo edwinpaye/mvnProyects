@@ -71,6 +71,7 @@ public class UserManager {
         }
     }
     
+    
     //el metodo lista los resultados obtenidos 
     public ArrayList<Usuario> ListarResultado() {     
         try {
