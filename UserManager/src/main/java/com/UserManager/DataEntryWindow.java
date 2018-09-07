@@ -92,7 +92,7 @@ public class DataEntryWindow extends javax.swing.JFrame {
 //        if (!txtPhone.getText().isEmpty()) {
 //            
 //        }
-        editionWindow.setDataTable(userManager.search("name = "+txtName.getText()+""));
+        editionWindow.setDataTable(userManager.search("name like \"%"+txtName.getText()+"%\""));
     }//GEN-LAST:event_btnSearchActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
