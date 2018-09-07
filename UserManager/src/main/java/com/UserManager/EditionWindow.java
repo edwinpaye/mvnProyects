@@ -31,6 +31,15 @@ public class EditionWindow extends javax.swing.JFrame {
         userList = newUserList;
         jTable1.setModel(new javax.swing.table.DefaultTableModel(getInformation(newUserList), etiquetas));
     }
+    
+    public void enableButtons(boolean enable){
+        btnUserList.setEnabled(enable);
+        btnExit.setEnabled(enable);
+        btnAddUser.setEnabled(enable);
+        btnDeleteUser.setEnabled(enable);
+        btnSearchUser.setEnabled(enable);
+        btnEditUser.setEnabled(enable);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
