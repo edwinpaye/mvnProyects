@@ -79,20 +79,12 @@ public class DataEntryWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-//        String data = "";
-//        if (!txtName.getText().isEmpty()) {
-//            data = data + "name like %"+txtName.getText()+"%";
-//        }
-//        if (!txtLastName.getText().isEmpty()) {
-//            
-//        }
-//        if (!txtAge.getText().isEmpty()) {
-//            
-//        }
-//        if (!txtPhone.getText().isEmpty()) {
-//            
-//        }
-        editionWindow.setDataTable(userManager.search("name like \"%"+txtName.getText()+"%\""));
+
+        editionWindow.setDataTable(userManager.search("name like \"%"
+                +txtName.getText()+"%\" and lastname like \"%"
+                +txtLastName.getText()+"%\" and age like \"%"
+                +txtAge.getText()+"%\" and phone like \"%"
+                +txtPhone.getText()+"%\""));
     }//GEN-LAST:event_btnSearchActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
