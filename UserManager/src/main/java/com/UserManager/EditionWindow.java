@@ -18,11 +18,11 @@ public class EditionWindow extends javax.swing.JFrame {
     private Object[][] getInformation(ArrayList<Usuario> newUserList){
         Object[][] listOfInformation = new Object[newUserList.size()][etiquetas.length];
         for (int i = 0; i < newUserList.size(); i++) {
-                listOfInformation[i][0] = newUserList.get(i).getId_user();
-                listOfInformation[i][1] = newUserList.get(i).getNombre();
-                listOfInformation[i][2] = newUserList.get(i).getApellido();
-                listOfInformation[i][3] = newUserList.get(i).getEdad();
-                listOfInformation[i][4] = newUserList.get(i).getTelefono();
+            listOfInformation[i][0] = newUserList.get(i).getId_user();
+            listOfInformation[i][1] = newUserList.get(i).getNombre();
+            listOfInformation[i][2] = newUserList.get(i).getApellido();
+            listOfInformation[i][3] = newUserList.get(i).getEdad();
+            listOfInformation[i][4] = newUserList.get(i).getTelefono();
         }
         return listOfInformation;
     }
@@ -162,12 +162,10 @@ public class EditionWindow extends javax.swing.JFrame {
         if (jTable1.getSelectedRow() > -1 && JOptionPane.showConfirmDialog(null, "Confirm deleted?", "Confirm deleted", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             userManager.RemoveUser(userList.get(jTable1.getSelectedRow()).getId_user());
             setDataTable(userManager.ListarResultado());
-
         }
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 
     private void btnEditUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditUserActionPerformed
-//        userManager.EditUser(newUsuario, userList.get(jTable1.getSelectedRow()).getId_user());
         if (jTable1.getSelectedRow() > -1) {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
