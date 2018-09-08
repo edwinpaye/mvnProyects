@@ -12,9 +12,13 @@ public class UserManager {
     private ResultSet resultSet;
     private ResultSetMetaData rsultado;
     private ArrayList<Usuario> lista;
+    private String[] campos;
+    private String table;
     
-    public UserManager(ConectionSql connectSql) {
-        this.connectSql=connectSql;
+    public UserManager(ConectionSql newConnectSql) {
+        this.connectSql = newConnectSql;
+        this.table = connectSql.getTable();
+        this.campos = ListarEtiquetas();
     }
     
     //este metodo es para mantener una coneccion con la ruta a la base de datos!
@@ -44,7 +48,7 @@ public class UserManager {
     //el metodo ejecuta la consulta establesida
     public void EjecutarConsulta() {
         try {
-            Consultar("select * from users");
+            Consultar("select * from "+table);
             this.resultSet = preparedStatement.executeQuery();
         } catch (Exception e) {
             MessageEmergent("Fail EjecutarConsulta(): "+e.getMessage());
@@ -53,7 +57,7 @@ public class UserManager {
     
     public void EjecutarConsulta(String data) {
         try {
-            Consultar("select * from users where "+data);
+            Consultar("select * from "+table+" where "+data);
             this.resultSet = preparedStatement.executeQuery();
         } catch (Exception e) {
             MessageEmergent("Fail EjecutarConsulta(): "+e.getMessage());
@@ -78,8 +82,8 @@ public class UserManager {
             EjecutarConsulta();
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
-                lista.add(new Usuario(this.resultSet.getInt("id"),this.resultSet.getString("name"),
-                this.resultSet.getString("lastname"),this.resultSet.getInt("age"),this.resultSet.getInt("phone")));
+                lista.add(new Usuario(this.resultSet.getInt(campos[0]),this.resultSet.getString(campos[1]),
+                this.resultSet.getString(campos[2]),this.resultSet.getInt(campos[3]),this.resultSet.getInt(campos[4])));
             }
             ExitConection();
             return lista;
@@ -105,7 +109,7 @@ public class UserManager {
     
     public void AddUser(Usuario newUsuario) {
         try {
-            Consultar("INSERT INTO users (name, lastname, age, phone) VALUES (?,?,?,?)");
+            Consultar("INSERT INTO "+table+" ("+campos[1]+", "+campos[2]+", "+campos[3]+", "+campos[4]+") VALUES (?,?,?,?)");
             preparedStatement.setString(1, newUsuario.getNombre());
             preparedStatement.setString(2, newUsuario.getApellido());
             preparedStatement.setInt(3, newUsuario.getEdad());
@@ -119,7 +123,7 @@ public class UserManager {
 
     public void RemoveUser(int deleteUser){
         try {
-            Consultar("DELETE FROM users where id = ?");
+            Consultar("DELETE FROM "+table+" where "+campos[0]+" = ?");
             preparedStatement.setInt(1, deleteUser);
             preparedStatement.executeUpdate();
             MessageEmergent("User Deleted");
@@ -130,7 +134,7 @@ public class UserManager {
 
     public void EditUser(Usuario newUsuario ,int id){
         try {
-            Consultar("UPDATE users SET name = ?, lastname = ?, age = ?, phone = ? WHERE id = ?");
+            Consultar("UPDATE "+table+" SET "+campos[1]+" = ?, "+campos[2]+" = ?, "+campos[3]+" = ?, "+campos[4]+" = ? WHERE "+campos[0]+" = ?");
             preparedStatement.setString(1, newUsuario.getNombre());
             preparedStatement.setString(2, newUsuario.getApellido());
             preparedStatement.setInt(3, newUsuario.getEdad());
@@ -145,11 +149,11 @@ public class UserManager {
     
     public ArrayList<Usuario> search(String data){
         try {
-            resultSet = connectSql.Connect().createStatement().executeQuery("select * from users where "+data);
+            resultSet = connectSql.Connect().createStatement().executeQuery("select * from "+table+" where "+data);
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
-                lista.add(new Usuario(this.resultSet.getInt("id"),this.resultSet.getString("name"),
-                this.resultSet.getString("lastname"),this.resultSet.getInt("age"),this.resultSet.getInt("phone")));
+                lista.add(new Usuario(this.resultSet.getInt(campos[0]),this.resultSet.getString(campos[1]),
+                this.resultSet.getString(campos[2]),this.resultSet.getInt(campos[3]),this.resultSet.getInt(campos[4])));
             }
             ExitConection();
             return lista;
