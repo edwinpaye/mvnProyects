@@ -6,10 +6,13 @@ public class EditUserWindow extends javax.swing.JFrame {
 
     private UserManager userManager;
     private Usuario usuario;
+    private EditionWindow editionWindow;
     
-    public EditUserWindow(UserManager newUserManager, Usuario userEdit) {
+    public EditUserWindow(UserManager newUserManager, Usuario userEdit, EditionWindow newEditionWindow) {
+        this.editionWindow = newEditionWindow;
         userManager = newUserManager;
         usuario = userEdit;
+        editionWindow.enableButtons(false);
         initComponents();
         setDataUser();
     }
@@ -85,6 +88,7 @@ public class EditUserWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        editionWindow.enableButtons(true);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
@@ -92,6 +96,7 @@ public class EditUserWindow extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(null, "Confirm edited?", "Confirm edit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             userManager.EditUser(new Usuario(usuario.getId_user(), txtName.getText(), txtLastName.getText(),
             Integer.parseInt(txtAge.getText()), Integer.parseInt(txtPhone.getText())), usuario.getId_user());
+            editionWindow.setDataTable(userManager.ListarResultado());
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
