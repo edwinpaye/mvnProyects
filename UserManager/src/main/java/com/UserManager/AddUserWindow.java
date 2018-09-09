@@ -3,9 +3,12 @@ package com.UserManager;
 public class AddUserWindow extends javax.swing.JFrame {
 
     private UserManager userManager;
+    private EditionWindow editionWindow;
     
-    public AddUserWindow(UserManager newUserManager) {
+    public AddUserWindow(UserManager newUserManager, EditionWindow newEditionWindow) {
         userManager = newUserManager;
+        this.editionWindow = newEditionWindow;
+        editionWindow.enableButtons(false);
         initComponents();
     }
 
@@ -70,9 +73,11 @@ public class AddUserWindow extends javax.swing.JFrame {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         userManager.AddUser(new Usuario(0, txtName.getText(), txtLastName.getText(),
         Integer.parseInt(txtAge.getText()), Integer.parseInt(txtPhone.getText())));
+        editionWindow.setDataTable(userManager.ListarResultado());
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        editionWindow.enableButtons(true);
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
