@@ -8,13 +8,13 @@ public class EditionWindow extends javax.swing.JFrame {
     private ArrayList<Usuario> userList;
     private UserManager userManager;
     private String[] etiquetas;
-    
+
     public EditionWindow(UserManager newUserManager) {
         userManager = newUserManager;
         etiquetas = userManager.ListarEtiquetas();
         initComponents();
     }
-    
+
     private Object[][] getInformation(ArrayList<Usuario> newUserList){
         Object[][] listOfInformation = new Object[newUserList.size()][etiquetas.length];
         for (int i = 0; i < newUserList.size(); i++) {
@@ -26,12 +26,12 @@ public class EditionWindow extends javax.swing.JFrame {
         }
         return listOfInformation;
     }
-    
+
     public void setDataTable(ArrayList<Usuario> newUserList){
         userList = newUserList;
         jTable1.setModel(new javax.swing.table.DefaultTableModel(getInformation(newUserList), etiquetas));
     }
-    
+
     public void enableButtons(boolean enable){
         btnUserList.setEnabled(enable);
         btnExit.setEnabled(enable);
@@ -137,7 +137,7 @@ public class EditionWindow extends javax.swing.JFrame {
     public EditionWindow getWindow(){
         return this;
     }
-    
+
     private void btnSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchUserActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
