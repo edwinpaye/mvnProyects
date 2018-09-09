@@ -149,7 +149,7 @@ public class EditionWindow extends javax.swing.JFrame {
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddUserWindow(userManager).setVisible(true);
+                new AddUserWindow(userManager, getWindow()).setVisible(true);
             }
         });
     }//GEN-LAST:event_btnAddUserActionPerformed
@@ -169,7 +169,7 @@ public class EditionWindow extends javax.swing.JFrame {
         if (jTable1.getSelectedRow() > -1) {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                    new EditUserWindow(userManager, userList.get(jTable1.getSelectedRow())).setVisible(true);
+                    new EditUserWindow(userManager, userList.get(jTable1.getSelectedRow()), getWindow()).setVisible(true);
                 }
             });
         }
