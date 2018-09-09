@@ -28,7 +28,6 @@ public class ConectionSql {
     
     public Connection Connect() {
         try{
-
             return DriverManager.getConnection(path,this.user,this.password);
         }catch (Exception e) {
             System.out.println("Unable to establish connection " + e.getMessage());
