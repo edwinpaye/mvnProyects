@@ -163,6 +163,19 @@ public class UserManager {
         return lista;
     }
     
+    public ArrayList<String> getDataBases(){
+        ArrayList<String> dataBases = new ArrayList<>();
+        try {
+            resultSet = connectSql.Connect().createStatement().executeQuery("show databases");
+            while (this.resultSet.next()) {
+                dataBases.add(resultSet.getString(1));
+            }
+        } catch (Exception e) {
+            MessageEmergent("RemoveUser() fail"+e.getMessage());
+        }
+        return dataBases;
+    }
+    
     public void MessageEmergent(String message){
         JOptionPane.showMessageDialog(null, message);
     }
