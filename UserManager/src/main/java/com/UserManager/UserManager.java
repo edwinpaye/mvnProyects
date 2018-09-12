@@ -166,7 +166,7 @@ public class UserManager {
     public ArrayList<String> getDataBases(){
         ArrayList<String> dataBases = new ArrayList<>();
         try {
-            resultSet = connectSql.Connect().createStatement().executeQuery("show databases");
+            resultSet = connectSql.serverMysql().createStatement().executeQuery("show databases");
             while (this.resultSet.next()) {
                 dataBases.add(resultSet.getString(1));
             }
