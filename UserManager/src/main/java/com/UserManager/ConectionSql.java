@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 public class ConectionSql {
     
     private String path, user, password, table;
+    private DBConfig dBConfig;
     
     public ConectionSql(String path, String table,String user,String password) {
         this.path = path;
@@ -20,7 +21,8 @@ public class ConectionSql {
     }
     
     public ConectionSql(DBConfig newDBConfig) {
-        this.path = "jdbc:mysql://"+newDBConfig.getServer()+":"+newDBConfig.getPort()+"/"+newDBConfig.getBaseDato();
+        this.dBConfig = newDBConfig;
+        this.path = "jdbc:mysql://"+dBConfig.getServer()+":"+dBConfig.getPort()+"/"+dBConfig.getBaseDato();
         this.user = newDBConfig.getUser();
         this.password = newDBConfig.getPassword();
         this.table = newDBConfig.getDBTable();
@@ -29,6 +31,16 @@ public class ConectionSql {
     public Connection Connect() {
         try{
             return DriverManager.getConnection(path,this.user,this.password);
+        }catch (Exception e) {
+            System.out.println("Unable to establish connection " + e.getMessage());
+            e.getStackTrace();
+        }
+        return null;
+    }
+    
+    public Connection serverMysql(){
+        try{
+            return DriverManager.getConnection("jdbc:mysql://"+dBConfig.getServer()+":"+dBConfig.getPort(),this.user,this.password);
         }catch (Exception e) {
             System.out.println("Unable to establish connection " + e.getMessage());
             e.getStackTrace();
