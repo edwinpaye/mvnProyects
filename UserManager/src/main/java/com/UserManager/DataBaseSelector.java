@@ -6,6 +6,7 @@ public class DataBaseSelector extends javax.swing.JFrame {
 
     private UserManager userManager;
     private ArrayList<String> dataBases;
+    private ArrayList<String> tables;
     
     public DataBaseSelector(UserManager newUserManager) {
         this.userManager = newUserManager;
@@ -14,6 +15,10 @@ public class DataBaseSelector extends javax.swing.JFrame {
 
     public void getDataBases(){
         this.dataBases = userManager.getDataBases();
+    }
+    
+    public void getTables(){
+        this.tables = userManager.getTables();
     }
     /**
      * This method is called from within the constructor to initialize the form.
