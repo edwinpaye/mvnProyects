@@ -5,11 +5,20 @@ public class Controller {
     public Controller(){}
 
     public void start(UserManager newUserManager){
-//        EditionWindow editionWindow = new EditionWindow(new UserManager(newConectionSql));
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditionWindow(newUserManager).setVisible(true);
+                new DataBaseSelector(newUserManager).setVisible(true);
             }
         });
+        
+//        if (newUserManager.getConnectSql().getDataBase() != null && newUserManager.getConnectSql().getTable() != null) {
+//            java.awt.EventQueue.invokeLater(new Runnable() {
+//                public void run() {
+//                    new EditionWindow(newUserManager).setVisible(true);
+//                }
+//            });    
+//        }
+        
     }
 }
