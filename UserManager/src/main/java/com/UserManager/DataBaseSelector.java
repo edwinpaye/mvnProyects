@@ -13,11 +13,11 @@ public class DataBaseSelector extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void getDataBases(){
+    public void setDataBases(){
         this.dataBases = userManager.getDataBases();
     }
     
-    public void getTables(){
+    public void setTables(){
         this.tables = userManager.getTables();
     }
     /**
