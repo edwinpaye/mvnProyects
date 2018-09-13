@@ -15,11 +15,16 @@ public class DataBaseSelector extends javax.swing.JFrame {
 
     public void setDataBases(){
         this.dataBases = userManager.getDataBases();
+        jcbDataBase.setModel(new javax.swing.DefaultComboBoxModel<>(dataBases.toArray(new String[dataBases.size()])));
+
     }
     
     public void setTables(){
         this.tables = userManager.getTables();
+        jcbTable.setModel(new javax.swing.DefaultComboBoxModel<>(tables.toArray(new String[tables.size()])));
     }
+    
+//    public void 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,9 +37,9 @@ public class DataBaseSelector extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        jcbDataBase = new javax.swing.JComboBox<>();
+        jcbTable = new javax.swing.JComboBox<>();
+        btnSelectTable = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -46,27 +51,27 @@ public class DataBaseSelector extends javax.swing.JFrame {
         jLabel2.setText("Data base:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
-        jLabel3.setText("Tabe:");
+        jLabel3.setText("Table:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 80, 140, -1));
+        jcbDataBase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jcbDataBase, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 80, 140, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 150, 140, -1));
+        jcbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jcbTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 150, 140, -1));
 
-        jButton1.setText("Select Table");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+        btnSelectTable.setText("Select Table");
+        getContentPane().add(btnSelectTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton btnSelectTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JComboBox<String> jcbDataBase;
+    private javax.swing.JComboBox<String> jcbTable;
     // End of variables declaration//GEN-END:variables
 }
