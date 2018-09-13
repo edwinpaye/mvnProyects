@@ -171,11 +171,23 @@ public class UserManager {
                 dataBases.add(resultSet.getString(1));
             }
         } catch (Exception e) {
-            MessageEmergent("RemoveUser() fail"+e.getMessage());
+            MessageEmergent("getDataBases fail"+e.getMessage());
         }
         return dataBases;
     }
     
+    public ArrayList<String> getTables(){
+        ArrayList<String> dataBases = new ArrayList<>();
+        try {
+            resultSet = connectSql.Connect().createStatement().executeQuery("show tables");
+            while (this.resultSet.next()) {
+                dataBases.add(resultSet.getString(1));
+            }
+        } catch (Exception e) {
+            MessageEmergent("getTables fail"+e.getMessage());
+        }
+        return dataBases;
+    }
     public void MessageEmergent(String message){
         JOptionPane.showMessageDialog(null, message);
     }
