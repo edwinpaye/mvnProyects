@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class UserManager {
+
+    public ConectionSql getConnectSql() {
+        return connectSql;
+    }
+
+    public void setConnectSql(ConectionSql connectSql) {
+        this.connectSql = connectSql;
+    }
     
     private ConectionSql connectSql;
     private Connection conection;
@@ -170,16 +178,17 @@ public class UserManager {
             while (this.resultSet.next()) {
                 dataBases.add(resultSet.getString(1));
             }
+            return dataBases;
         } catch (Exception e) {
             MessageEmergent("getDataBases fail"+e.getMessage());
         }
         return dataBases;
     }
     
-    public ArrayList<String> getTables(){
+    public ArrayList<String> getTables(String dataBase){
         ArrayList<String> dataBases = new ArrayList<>();
         try {
-            resultSet = connectSql.Connect().createStatement().executeQuery("show tables");
+            resultSet = connectSql.Connect(dataBase).createStatement().executeQuery("show tables");
             while (this.resultSet.next()) {
                 dataBases.add(resultSet.getString(1));
             }
