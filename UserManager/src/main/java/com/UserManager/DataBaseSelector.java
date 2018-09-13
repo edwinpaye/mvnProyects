@@ -11,6 +11,7 @@ public class DataBaseSelector extends javax.swing.JFrame {
     public DataBaseSelector(UserManager newUserManager) {
         this.userManager = newUserManager;
         initComponents();
+        setDataBases();
     }
 
     public void setDataBases(){
@@ -19,8 +20,8 @@ public class DataBaseSelector extends javax.swing.JFrame {
 
     }
     
-    public void setTables(){
-        this.tables = userManager.getTables();
+    public void setTables(String dataBase){
+        this.tables = userManager.getTables(dataBase);
         jcbTable.setModel(new javax.swing.DefaultComboBoxModel<>(tables.toArray(new String[tables.size()])));
     }
     
@@ -55,6 +56,11 @@ public class DataBaseSelector extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         jcbDataBase.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbDataBase.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbDataBaseActionPerformed(evt);
+            }
+        });
         getContentPane().add(jcbDataBase, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 80, 140, -1));
 
         jcbTable.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -65,6 +71,11 @@ public class DataBaseSelector extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jcbDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbDataBaseActionPerformed
+        // TODO add your handling code here:
+        setTables(jcbDataBase.getSelectedItem().toString());
+    }//GEN-LAST:event_jcbDataBaseActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelectTable;
