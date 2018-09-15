@@ -15,6 +15,8 @@ public class UserManager {
     private ArrayList<String> campos;
 //    private String table;
     private ArrayList<String> data;
+    private String dataBase;
+    private String table;
     
     public UserManager(ConectionSql newConnectSql) {
         this.connectSql = newConnectSql;
@@ -24,12 +26,8 @@ public class UserManager {
     
     //este metodo es para mantener una coneccion con la ruta a la base de datos!
     public void conectionSql(){
-        conection = connectSql.connect();
+        conection = connectSql.connectDataBase(dataBase);
     }
-    
-//    public void connectionSql(String dataBase){
-//        conection = connectSql.connect(dataBase);
-//    }
     
     //el metodo da ordenes consultas a la ase de datos
     public void Consultar(String query) {
@@ -51,7 +49,7 @@ public class UserManager {
     }
     
     //el metodo ejecuta la consulta establesida
-    public void EjecutarConsulta(String table) {
+    public void EjecutarConsulta() {
         try {
             Consultar("select * from "+table);
             this.resultSet = preparedStatement.executeQuery();
@@ -60,7 +58,7 @@ public class UserManager {
         }
     }
     
-    public void EjecutarConsulta(String table, String data) {
+    public void EjecutarConsulta(String data) {
         try {
             Consultar("select * from "+table+" where "+data);
             this.resultSet = preparedStatement.executeQuery();
@@ -81,8 +79,10 @@ public class UserManager {
     }
     
     //el metodo lista los resultados obtenidos 
-    public ArrayList<Usuario> ListarResultado() {     
+    public ArrayList<Usuario> ListarResultado(String dataBase, String table) {     
         try {
+            this.dataBase = dataBase;
+            this.table = table;
             EjecutarConsulta();
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
@@ -102,6 +102,10 @@ public class UserManager {
 //            EjecutarConsulta();
 //            rsultado = resultSet.getMetaData();
 //            ExitConection();
+            this.dataBase = dataBase;
+            this.table = table;
+//            Consultar("select * from "+table);
+//            this.resultSet = preparedStatement.executeQuery();
             campos = new ArrayList<>();
             resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("desc "+table);
             while (this.resultSet.next()) {
@@ -115,8 +119,9 @@ public class UserManager {
         return campos;
     }
     
-    public void AddUser(String table, Usuario newUsuario) {
+    public void AddUser(String dataBase, String table, Usuario newUsuario) {
         try {
+            this.dataBase = dataBase;
             Consultar("INSERT INTO "+table+" ("+campos.get(1)+", "+campos.get(2)+", "+campos.get(3)+", "+campos.get(4)+") VALUES (?,?,?,?)");
             preparedStatement.setString(1, newUsuario.getNombre());
             preparedStatement.setString(2, newUsuario.getApellido());
@@ -129,8 +134,9 @@ public class UserManager {
         }
     } 
 
-    public void RemoveUser(String table, int deleteUser){
+    public void RemoveUser(String dataBase, String table, int deleteUser){
         try {
+            this.dataBase = dataBase;
             Consultar("DELETE FROM "+table+" where "+campos.get(0)+" = ?");
             preparedStatement.setInt(1, deleteUser);
             preparedStatement.executeUpdate();
@@ -140,8 +146,9 @@ public class UserManager {
         }
     }
 
-    public void EditUser(String table, Usuario newUsuario){
+    public void EditUser(String dataBase, String table, Usuario newUsuario){
         try {
+            this.dataBase = dataBase;
             Consultar("UPDATE "+table+" SET "+campos.get(1)+" = ?, "+campos.get(2)+" = ?, "+campos.get(3)+" = ?, "+campos.get(4)+" = ? WHERE "+campos.get(0)+" = ?");
             preparedStatement.setString(1, newUsuario.getNombre());
             preparedStatement.setString(2, newUsuario.getApellido());
@@ -156,7 +163,8 @@ public class UserManager {
     
     public ArrayList<Usuario> search(String table, String data){
         try {
-            resultSet = connectSql.connect().createStatement().executeQuery("select * from "+table+" where "+data);
+//            resultSet = connectSql.connect().createStatement().executeQuery("select * from "+table+" where "+data);
+            EjecutarConsulta(data);
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
                 lista.add(new Usuario(this.resultSet.getInt(campos.get(0)),this.resultSet.getString(campos.get(1)),
