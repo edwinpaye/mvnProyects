@@ -17,7 +17,6 @@ public class DataBaseSelector extends javax.swing.JFrame {
     public void setDataBases(){
         this.dataBases = userManager.getDataBases();
         jcbDataBase.setModel(new javax.swing.DefaultComboBoxModel<>(dataBases.toArray(new String[dataBases.size()])));
-
     }
     
     public void setTables(String dataBase){
@@ -73,7 +72,6 @@ public class DataBaseSelector extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jcbDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbDataBaseActionPerformed
-        // TODO add your handling code here:
         setTables(jcbDataBase.getSelectedItem().toString());
     }//GEN-LAST:event_jcbDataBaseActionPerformed
 
