@@ -5,32 +5,27 @@ import java.sql.DriverManager;
 
 public class ConectionSql {
     
-    private String path, user, password, table;
-    private DBConfig dBConfig;
+    private String path;
+    private String user;
+    private String password;
+    private String dataBase;
     
-    public ConectionSql(String path, String table,String user,String password) {
+    public ConectionSql(String path, String user,String password) {
         this.path = path;
         this.user = user;
         this.password = password;
-        this.table = table;
     }
-    
-    public String getTable(){
-        System.out.println("funciona"+table);
-        return table;
-    }
-    
+
     public ConectionSql(DBConfig newDBConfig) {
-        this.dBConfig = newDBConfig;
-        this.path = "jdbc:mysql://"+dBConfig.getServer()+":"+dBConfig.getPort()+"/"+dBConfig.getBaseDato();
+        this.path = "jdbc:mysql://"+newDBConfig.getServer()+":"+newDBConfig.getPort();
         this.user = newDBConfig.getUser();
         this.password = newDBConfig.getPassword();
-        this.table = newDBConfig.getDBTable();
+        this.dataBase = newDBConfig.getBaseDato();
     }
     
-    public Connection Connect() {
+    public Connection connect() {
         try{
-            return DriverManager.getConnection(path,this.user,this.password);
+            return DriverManager.getConnection(path+"/"+dataBase, user, password);
         }catch (Exception e) {
             System.out.println("Unable to establish connection " + e.getMessage());
             e.getStackTrace();
@@ -38,11 +33,21 @@ public class ConectionSql {
         return null;
     }
     
-    public Connection serverMysql(){
+    public Connection connectDataBase(String newDataBase) {
         try{
-            return DriverManager.getConnection("jdbc:mysql://"+dBConfig.getServer()+":"+dBConfig.getPort(),this.user,this.password);
+            return DriverManager.getConnection(path+"/"+newDataBase, user, password);
         }catch (Exception e) {
-            System.out.println("Unable to establish connection " + e.getMessage());
+            System.out.println("Unable to establish data Base connection " + e.getMessage());
+            e.getStackTrace();
+        }
+        return null;
+    }
+    
+    public Connection connectServerMysql(){
+        try{
+            return DriverManager.getConnection(path, user, password);
+        }catch (Exception e) {
+            System.out.println("Unable to establish server connection " + e.getMessage());
             e.getStackTrace();
         }
         return null;
