@@ -6,33 +6,30 @@ import javax.swing.JOptionPane;
 
 public class UserManager {
 
-    public ConectionSql getConnectSql() {
-        return connectSql;
-    }
-
-    public void setConnectSql(ConectionSql connectSql) {
-        this.connectSql = connectSql;
-    }
-    
     private ConectionSql connectSql;
     private Connection conection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private ResultSetMetaData rsultado;
     private ArrayList<Usuario> lista;
-    private String[] campos;
-    private String table;
+    private ArrayList<String> campos;
+//    private String table;
+    private ArrayList<String> data;
     
     public UserManager(ConectionSql newConnectSql) {
         this.connectSql = newConnectSql;
-        this.table = connectSql.getTable();
-        this.campos = ListarEtiquetas();
+//        this.table = connectSql.getTable();
+//        this.campos = ListarEtiquetas();
     }
     
     //este metodo es para mantener una coneccion con la ruta a la base de datos!
     public void conectionSql(){
-        conection = connectSql.Connect();
+        conection = connectSql.connect();
     }
+    
+//    public void connectionSql(String dataBase){
+//        conection = connectSql.connect(dataBase);
+//    }
     
     //el metodo da ordenes consultas a la ase de datos
     public void Consultar(String query) {
@@ -54,7 +51,7 @@ public class UserManager {
     }
     
     //el metodo ejecuta la consulta establesida
-    public void EjecutarConsulta() {
+    public void EjecutarConsulta(String table) {
         try {
             Consultar("select * from "+table);
             this.resultSet = preparedStatement.executeQuery();
@@ -63,7 +60,7 @@ public class UserManager {
         }
     }
     
-    public void EjecutarConsulta(String data) {
+    public void EjecutarConsulta(String table, String data) {
         try {
             Consultar("select * from "+table+" where "+data);
             this.resultSet = preparedStatement.executeQuery();
@@ -83,18 +80,16 @@ public class UserManager {
         }
     }
     
-    
     //el metodo lista los resultados obtenidos 
     public ArrayList<Usuario> ListarResultado() {     
         try {
             EjecutarConsulta();
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
-                lista.add(new Usuario(this.resultSet.getInt(campos[0]),this.resultSet.getString(campos[1]),
-                this.resultSet.getString(campos[2]),this.resultSet.getInt(campos[3]),this.resultSet.getInt(campos[4])));
+                lista.add(new Usuario(this.resultSet.getInt(campos.get(0)),this.resultSet.getString(campos.get(1)),
+                this.resultSet.getString(campos.get(2)),this.resultSet.getInt(campos.get(3)),this.resultSet.getInt(campos.get(4))));
             }
             ExitConection();
-            return lista;
         } catch (Exception e) {
             MessageEmergent("Fail ListarResultado(): "+e.getLocalizedMessage());
         }
@@ -102,22 +97,27 @@ public class UserManager {
     }
     
     //el metodo muestra los nombres de campo en la base de datos
-    public String[] ListarEtiquetas() {         
+    public ArrayList<String> ListarEtiquetas(String dataBase, String table) {         
         try {
-            EjecutarConsulta();
-            rsultado = resultSet.getMetaData();
-            ExitConection();
-            return new String[]{rsultado.getColumnName(1), rsultado.getColumnName(2),
-            rsultado.getColumnName(3), rsultado.getColumnName(4), rsultado.getColumnName(5)};
+//            EjecutarConsulta();
+//            rsultado = resultSet.getMetaData();
+//            ExitConection();
+            campos = new ArrayList<>();
+            resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("desc "+table);
+            while (this.resultSet.next()) {
+                campos.add(resultSet.getString(1));
+            }
+//            return new String[]{rsultado.getColumnName(1), rsultado.getColumnName(2),
+//            rsultado.getColumnName(3), rsultado.getColumnName(4), rsultado.getColumnName(5)};
         } catch (Exception e) {
             MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
         }
-        return null;
+        return campos;
     }
     
-    public void AddUser(Usuario newUsuario) {
+    public void AddUser(String table, Usuario newUsuario) {
         try {
-            Consultar("INSERT INTO "+table+" ("+campos[1]+", "+campos[2]+", "+campos[3]+", "+campos[4]+") VALUES (?,?,?,?)");
+            Consultar("INSERT INTO "+table+" ("+campos.get(1)+", "+campos.get(2)+", "+campos.get(3)+", "+campos.get(4)+") VALUES (?,?,?,?)");
             preparedStatement.setString(1, newUsuario.getNombre());
             preparedStatement.setString(2, newUsuario.getApellido());
             preparedStatement.setInt(3, newUsuario.getEdad());
@@ -129,9 +129,9 @@ public class UserManager {
         }
     } 
 
-    public void RemoveUser(int deleteUser){
+    public void RemoveUser(String table, int deleteUser){
         try {
-            Consultar("DELETE FROM "+table+" where "+campos[0]+" = ?");
+            Consultar("DELETE FROM "+table+" where "+campos.get(0)+" = ?");
             preparedStatement.setInt(1, deleteUser);
             preparedStatement.executeUpdate();
             MessageEmergent("User Deleted");
@@ -140,14 +140,13 @@ public class UserManager {
         }
     }
 
-    public void EditUser(Usuario newUsuario ,int id){
+    public void EditUser(String table, Usuario newUsuario){
         try {
-            Consultar("UPDATE "+table+" SET "+campos[1]+" = ?, "+campos[2]+" = ?, "+campos[3]+" = ?, "+campos[4]+" = ? WHERE "+campos[0]+" = ?");
+            Consultar("UPDATE "+table+" SET "+campos.get(1)+" = ?, "+campos.get(2)+" = ?, "+campos.get(3)+" = ?, "+campos.get(4)+" = ? WHERE "+campos.get(0)+" = ?");
             preparedStatement.setString(1, newUsuario.getNombre());
             preparedStatement.setString(2, newUsuario.getApellido());
             preparedStatement.setInt(3, newUsuario.getEdad());
             preparedStatement.setInt(4, newUsuario.getTelefono());
-            preparedStatement.setInt(5, id);
             preparedStatement.executeUpdate();
             MessageEmergent("Edit User: "+newUsuario.getNombre()+" "+newUsuario.getApellido());
         } catch (Exception e) {
@@ -155,16 +154,15 @@ public class UserManager {
         }
     }
     
-    public ArrayList<Usuario> search(String data){
+    public ArrayList<Usuario> search(String table, String data){
         try {
-            resultSet = connectSql.Connect().createStatement().executeQuery("select * from "+table+" where "+data);
+            resultSet = connectSql.connect().createStatement().executeQuery("select * from "+table+" where "+data);
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
-                lista.add(new Usuario(this.resultSet.getInt(campos[0]),this.resultSet.getString(campos[1]),
-                this.resultSet.getString(campos[2]),this.resultSet.getInt(campos[3]),this.resultSet.getInt(campos[4])));
+                lista.add(new Usuario(this.resultSet.getInt(campos.get(0)),this.resultSet.getString(campos.get(1)),
+                this.resultSet.getString(campos.get(2)),this.resultSet.getInt(campos.get(3)),this.resultSet.getInt(campos.get(4))));
             }
             ExitConection();
-            return lista;
         } catch (Exception e) {
             MessageEmergent("Fail search(): "+e.getLocalizedMessage());
         }
@@ -172,31 +170,31 @@ public class UserManager {
     }
     
     public ArrayList<String> getDataBases(){
-        ArrayList<String> dataBases = new ArrayList<>();
+        data = new ArrayList<>();
         try {
-            resultSet = connectSql.serverMysql().createStatement().executeQuery("show databases");
+            resultSet = connectSql.connectServerMysql().createStatement().executeQuery("show databases");
             while (this.resultSet.next()) {
-                dataBases.add(resultSet.getString(1));
+                data.add(resultSet.getString(1));
             }
-            return dataBases;
         } catch (Exception e) {
             MessageEmergent("getDataBases fail"+e.getMessage());
         }
-        return dataBases;
+        return data;
     }
     
     public ArrayList<String> getTables(String dataBase){
-        ArrayList<String> dataBases = new ArrayList<>();
+        data.clear();
         try {
-            resultSet = connectSql.Connect(dataBase).createStatement().executeQuery("show tables");
+            resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("show tables");
             while (this.resultSet.next()) {
-                dataBases.add(resultSet.getString(1));
+                data.add(resultSet.getString(1));
             }
         } catch (Exception e) {
             MessageEmergent("getTables fail"+e.getMessage());
         }
-        return dataBases;
+        return data;
     }
+    
     public void MessageEmergent(String message){
         JOptionPane.showMessageDialog(null, message);
     }
