@@ -6,17 +6,21 @@ import javax.swing.JOptionPane;
 public class EditionWindow extends javax.swing.JFrame {
 
     private ArrayList<Usuario> userList;
+    private ArrayList<String> etiquetas;
     private UserManager userManager;
-    private String[] etiquetas;
+    private String dataBase;
+    private String table;
 
-    public EditionWindow(UserManager newUserManager) {
+    public EditionWindow(UserManager newUserManager, String newDataBase, String newTable) {
+        table = newTable;
+        dataBase = newDataBase;
         userManager = newUserManager;
-        etiquetas = userManager.ListarEtiquetas();
+        etiquetas = userManager.ListarEtiquetas(dataBase, table);
         initComponents();
     }
 
     private Object[][] getInformation(ArrayList<Usuario> newUserList){
-        Object[][] listOfInformation = new Object[newUserList.size()][etiquetas.length];
+        Object[][] listOfInformation = new Object[newUserList.size()][etiquetas.size()];
         for (int i = 0; i < newUserList.size(); i++) {
             listOfInformation[i][0] = newUserList.get(i).getId_user();
             listOfInformation[i][1] = newUserList.get(i).getNombre();
@@ -29,7 +33,8 @@ public class EditionWindow extends javax.swing.JFrame {
 
     public void setDataTable(ArrayList<Usuario> newUserList){
         userList = newUserList;
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(getInformation(newUserList), etiquetas));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(getInformation(newUserList), 
+                etiquetas.toArray(new String[etiquetas.size()])));
     }
 
     public void enableButtons(boolean enable){
@@ -155,13 +160,13 @@ public class EditionWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddUserActionPerformed
 
     private void btnUserListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserListActionPerformed
-        setDataTable(userManager.ListarResultado());
+        setDataTable(userManager.ListarResultado(dataBase, table));
     }//GEN-LAST:event_btnUserListActionPerformed
 
     private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
         if (jTable1.getSelectedRow() > -1 && JOptionPane.showConfirmDialog(null, "Confirm deleted?", "Confirm deleted", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            userManager.RemoveUser(userList.get(jTable1.getSelectedRow()).getId_user());
-            setDataTable(userManager.ListarResultado());
+            userManager.RemoveUser(dataBase, table, userList.get(jTable1.getSelectedRow()).getId_user());
+            setDataTable(userManager.ListarResultado(dataBase, table));
         }
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 
