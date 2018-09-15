@@ -45,7 +45,27 @@ public class EditionWindow extends javax.swing.JFrame {
         btnSearchUser.setEnabled(enable);
         btnEditUser.setEnabled(enable);
     }
+    
+    public ArrayList<String> getEtiquetas() {
+        return etiquetas;
+    }
 
+    public String getDataBase() {
+        return dataBase;
+    }
+
+    public void setDataBase(String dataBase) {
+        this.dataBase = dataBase;
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
