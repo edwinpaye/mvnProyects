@@ -7,9 +7,11 @@ public class DataBaseSelector extends javax.swing.JFrame {
     private UserManager userManager;
     private ArrayList<String> dataBases;
     private ArrayList<String> tables;
+    private Controller controller;
     
-    public DataBaseSelector(UserManager newUserManager) {
+    public DataBaseSelector(UserManager newUserManager, Controller newController) {
         this.userManager = newUserManager;
+        controller = newController;
         initComponents();
         setDataBases();
     }
@@ -46,7 +48,7 @@ public class DataBaseSelector extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("Data Base Selector");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 260, 40));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 260, 40));
 
         jLabel2.setText("Data base:");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
@@ -66,7 +68,12 @@ public class DataBaseSelector extends javax.swing.JFrame {
         getContentPane().add(jcbTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 150, 140, -1));
 
         btnSelectTable.setText("Select Table");
-        getContentPane().add(btnSelectTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+        btnSelectTable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectTableActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSelectTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -74,6 +81,11 @@ public class DataBaseSelector extends javax.swing.JFrame {
     private void jcbDataBaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbDataBaseActionPerformed
         setTables(jcbDataBase.getSelectedItem().toString());
     }//GEN-LAST:event_jcbDataBaseActionPerformed
+
+    private void btnSelectTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectTableActionPerformed
+        controller.runEditionWindow(jcbDataBase.getSelectedItem().toString(), jcbTable.getSelectedItem().toString(), userManager);
+        this.dispose();
+    }//GEN-LAST:event_btnSelectTableActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelectTable;
