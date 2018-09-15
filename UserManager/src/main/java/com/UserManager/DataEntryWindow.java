@@ -10,7 +10,7 @@ public class DataEntryWindow extends javax.swing.JFrame {
         userManager = newUserManager;
         editionWindow = newEditionWindow;
         editionWindow.enableButtons(false);
-        this.campos = userManager.ListarEtiquetas();
+        this.campos = editionWindow.getEtiquetas().toArray(new String[editionWindow.getEtiquetas().size()]);
         initComponents();
     }
 
@@ -83,11 +83,15 @@ public class DataEntryWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        editionWindow.setDataTable(userManager.search(campos[1]+" like \"%"
+//        ArrayList<String> campos = editionWindow.getEtiquetas();
+        editionWindow.setDataTable(userManager.search(editionWindow.getDataBase(), 
+                editionWindow.getTable(), campos[1]+" like \"%"
             +txtName.getText().trim()+"%\" and "+campos[2]+" like \"%"
             +txtLastName.getText().trim()+"%\" and "+campos[3]+" like \"%"
             +txtAge.getText().trim()+"%\" and "+campos[4]+" like \"%"
             +txtPhone.getText().trim()+"%\""));
+        editionWindow.enableButtons(true);
+        this.dispose();
     }//GEN-LAST:event_btnSearchActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
