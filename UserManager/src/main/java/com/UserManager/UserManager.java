@@ -161,9 +161,11 @@ public class UserManager {
         }
     }
     
-    public ArrayList<Usuario> search(String table, String data){
+    public ArrayList<Usuario> search(String dataBase, String table, String data){
         try {
 //            resultSet = connectSql.connect().createStatement().executeQuery("select * from "+table+" where "+data);
+            this.dataBase = dataBase;
+            this.table = table;
             EjecutarConsulta(data);
             lista = new ArrayList<>();
             while (this.resultSet.next()) {
