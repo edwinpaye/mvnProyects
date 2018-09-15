@@ -4,15 +4,15 @@ import javax.swing.JOptionPane;
 
 public class EditUserWindow extends javax.swing.JFrame {
 
+    private EditionWindow editionWindow;
     private UserManager userManager;
     private Usuario usuario;
-    private EditionWindow editionWindow;
     
     public EditUserWindow(UserManager newUserManager, Usuario userEdit, EditionWindow newEditionWindow) {
         this.editionWindow = newEditionWindow;
+        editionWindow.enableButtons(false);
         userManager = newUserManager;
         usuario = userEdit;
-        editionWindow.enableButtons(false);
         initComponents();
         setDataUser();
     }
@@ -94,9 +94,12 @@ public class EditUserWindow extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         if (JOptionPane.showConfirmDialog(null, "Confirm edited?", "Confirm edit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            userManager.EditUser(new Usuario(usuario.getId_user(), txtName.getText(), txtLastName.getText(),
-            Integer.parseInt(txtAge.getText()), Integer.parseInt(txtPhone.getText())), usuario.getId_user());
-            editionWindow.setDataTable(userManager.ListarResultado());
+            usuario.setNombre(txtName.getText());
+            usuario.setApellido(txtLastName.getText());
+            usuario.setEdad(Integer.parseInt(txtAge.getText()));
+            usuario.setTelefono(Integer.parseInt(txtPhone.getText()));
+            userManager.EditUser(editionWindow.getDataBase(), editionWindow.getTable(), usuario);
+            editionWindow.setDataTable(userManager.ListarResultado(editionWindow.getDataBase(), editionWindow.getTable()));
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
