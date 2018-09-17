@@ -122,6 +122,25 @@ public class UserManager {
         return resultSet;
     }
     
+    public ArrayList<Object[]> getDataArray(Object[] dimention){
+        ArrayList<Object[]> data = new ArrayList<>();
+        try {
+            resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("desc "+table);
+            Object[] info;
+            while (resultSet.next()) {
+                campos.add(resultSet.getString(1));
+                info = dimention;
+                for (int i = 0; i < 10; i++) {
+                    
+                }
+                data.add(info);
+            }
+        } catch (Exception e) {
+            MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
+        }
+        return data;
+    }
+    
     public void AddUser(String dataBase, String table, Usuario newUsuario) {
         try {
             this.dataBase = dataBase;
