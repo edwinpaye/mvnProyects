@@ -10,7 +10,7 @@ public class UserManager {
     private Connection conection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private ResultSetMetaData rsultado;
+//    private ResultSetMetaData rsultado;
     private ArrayList<Usuario> lista;
     private ArrayList<String> campos;
 //    private String table;
@@ -20,7 +20,6 @@ public class UserManager {
     
     public UserManager(ConectionSql newConnectSql) {
         this.connectSql = newConnectSql;
-//        this.table = connectSql.getTable();
 //        this.campos = ListarEtiquetas();
     }
     
@@ -117,6 +116,10 @@ public class UserManager {
             MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
         }
         return campos;
+    }
+    
+    public ResultSet getData(){
+        return resultSet;
     }
     
     public void AddUser(String dataBase, String table, Usuario newUsuario) {
