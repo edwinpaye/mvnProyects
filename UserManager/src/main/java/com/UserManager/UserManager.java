@@ -10,10 +10,9 @@ public class UserManager {
     private Connection conection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-//    private ResultSetMetaData rsultado;
+    private ResultSetMetaData rsultado;
     private ArrayList<Usuario> lista;
     private ArrayList<String> campos;
-//    private String table;
     private ArrayList<String> data;
     private String dataBase;
     private String table;
@@ -22,6 +21,11 @@ public class UserManager {
         this.connectSql = newConnectSql;
 //        this.campos = ListarEtiquetas();
     }
+
+    public void setDataBase(String dataBase){
+        this.dataBase = dataBase;
+    }
+    
     
     //este metodo es para mantener una coneccion con la ruta a la base de datos!
     public void conectionSql(){
