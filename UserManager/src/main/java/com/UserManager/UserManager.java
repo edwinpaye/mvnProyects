@@ -26,7 +26,9 @@ public class UserManager {
         this.dataBase = dataBase;
     }
     
-    
+    public void setTable(String table){
+        this.table = table;
+    }
     //este metodo es para mantener una coneccion con la ruta a la base de datos!
     public void conectionSql(){
         conection = connectSql.connectDataBase(dataBase);
