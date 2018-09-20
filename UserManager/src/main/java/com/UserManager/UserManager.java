@@ -147,7 +147,7 @@ public class UserManager {
                 data.add(info);
             }
         } catch (Exception e) {
-            MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
+//            MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
         }
         return data;
     }
