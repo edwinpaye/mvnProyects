@@ -175,7 +175,7 @@ public class UserManager {
             preparedStatement.executeUpdate();
             MessageEmergent("User Deleted");
         } catch (Exception e) {
-            MessageEmergent("RemoveUser() fail"+e.getMessage());
+//            MessageEmergent("RemoveUser() fail"+e.getMessage());
         }
     }
 
