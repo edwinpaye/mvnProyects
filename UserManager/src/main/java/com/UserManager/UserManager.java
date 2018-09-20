@@ -220,7 +220,7 @@ public class UserManager {
                 data.add(resultSet.getString(1));
             }
         } catch (Exception e) {
-            MessageEmergent("getDataBases fail"+e.getMessage());
+            //MessageEmergent("getDataBases fail"+e.getMessage());
         }
         return data;
     }
