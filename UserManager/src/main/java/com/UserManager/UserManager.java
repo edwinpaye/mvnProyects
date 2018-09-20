@@ -124,7 +124,7 @@ public class UserManager {
 //            return new String[]{rsultado.getColumnName(1), rsultado.getColumnName(2),
 //            rsultado.getColumnName(3), rsultado.getColumnName(4), rsultado.getColumnName(5)};
         } catch (Exception e) {
-            MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
+//            MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
         }
         return campos;
     }
