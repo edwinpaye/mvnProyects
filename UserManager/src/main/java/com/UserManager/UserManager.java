@@ -10,7 +10,7 @@ public class UserManager {
     private Connection conection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private ResultSetMetaData rsultado;
+    //private ResultSetMetaData rsultado;
     private ArrayList<Usuario> lista;
     private ArrayList<String> campos;
     private ArrayList<String> data;
@@ -19,7 +19,6 @@ public class UserManager {
     
     public UserManager(ConectionSql newConnectSql) {
         this.connectSql = newConnectSql;
-//        this.campos = ListarEtiquetas();
     }
 
     public void setDataBase(String dataBase){
@@ -234,7 +233,7 @@ public class UserManager {
                 data.add(resultSet.getString(1));
             }
         } catch (Exception e) {
-            MessageEmergent("getTables fail"+e.getMessage());
+            //MessageEmergent("getTables fail"+e.getMessage());
         }
         return data;
     }
