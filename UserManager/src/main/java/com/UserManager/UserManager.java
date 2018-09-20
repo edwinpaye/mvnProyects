@@ -190,7 +190,7 @@ public class UserManager {
             preparedStatement.executeUpdate();
             MessageEmergent("Edit User: "+newUsuario.getNombre()+" "+newUsuario.getApellido());
         } catch (Exception e) {
-            MessageEmergent("EditUser() fail "+e.getMessage());
+            //MessageEmergent("EditUser() fail "+e.getMessage());
         }
     }
     
