@@ -163,7 +163,7 @@ public class UserManager {
             preparedStatement.executeUpdate();
             MessageEmergent("User added: "+newUsuario.getNombre()+" "+newUsuario.getApellido());
         } catch (Exception e) {
-            MessageEmergent("AddUser() fail "+e.getMessage());
+//            MessageEmergent("AddUser() fail "+e.getMessage());
         }
     } 
 
