@@ -54,7 +54,7 @@ public class UserManager {
         try {
             preparedStatement.close();
         } catch (Exception e) {
-            MessageEmergent("Fail ExitStatements(): "+e.getMessage());
+//            MessageEmergent("Fail ExitStatements(): "+e.getMessage());
         }
     }
     
