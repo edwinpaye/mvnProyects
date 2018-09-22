@@ -73,7 +73,7 @@ public class UserManager {
             Consultar("select * from "+table+" where "+data);
             this.resultSet = preparedStatement.executeQuery();
         } catch (Exception e) {
-            MessageEmergent("Fail EjecutarConsulta(): "+e.getMessage());
+//            MessageEmergent("Fail EjecutarConsulta(): "+e.getMessage());
         }
     }
     
