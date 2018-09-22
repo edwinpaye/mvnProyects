@@ -84,7 +84,7 @@ public class UserManager {
             preparedStatement.close();
             conection.close();
         } catch (Exception e) {
-            MessageEmergent("Fail ExitConection(): "+e.getMessage());
+//            MessageEmergent("Fail ExitConection(): "+e.getMessage());
         }
     }
     
