@@ -101,7 +101,7 @@ public class UserManager {
             }
             ExitConection();
         } catch (Exception e) {
-            MessageEmergent("Fail ListarResultado(): "+e.getLocalizedMessage());
+//            MessageEmergent("Fail ListarResultado(): "+e.getLocalizedMessage());
         }
         return lista;
     }
