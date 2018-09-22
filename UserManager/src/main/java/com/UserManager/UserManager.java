@@ -45,7 +45,7 @@ public class UserManager {
             conectionSql();
             preparedStatement = conection.prepareStatement(query);
         } catch (Exception e) {
-            MessageEmergent("Fail Consultar(): "+e.getMessage());
+//            MessageEmergent("Fail Consultar(): "+e.getMessage());
         }
     }
     
