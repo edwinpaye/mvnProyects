@@ -141,8 +141,8 @@ public class UserManager {
             while (resultSet.next()) {
                 campos.add(resultSet.getString(1));
                 info = dimention;
-                for (int i = 0; i < 10; i++) {
-                    
+                for (int i = 0; i < info.length; i++) {
+                    info[i] = resultSet.getString(i+1);
                 }
                 data.add(info);
             }
