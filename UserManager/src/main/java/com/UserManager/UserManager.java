@@ -153,16 +153,14 @@ public class UserManager {
     }
     
     public ArrayList<Object[]> getDataArray(String dataBase, String table){
-        
         ArrayList<Object[]> data = new ArrayList<>();
         try {
             resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("desc "+table);
             Object[] info;
             while (resultSet.next()) {
-                campos.add(resultSet.getString(1));
                 info = new Object[ListarEtiquetas(dataBase, table).toArray().length];
-                for (int i = 0; i < 10; i++) {
-                    
+                for (int i = 0; i < info.length; i++) {
+                    info[i] = resultSet.getString(i+1);
                 }
                 data.add(info);
             }
