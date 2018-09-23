@@ -186,7 +186,8 @@ public class EditionWindow extends javax.swing.JFrame {
     private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
         if (jTable1.getSelectedRow() > -1 && JOptionPane.showConfirmDialog(null, "Confirm deleted?", "Confirm deleted", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             userManager.RemoveUser(dataBase, table, userList.get(jTable1.getSelectedRow()).getId_user());
-            setDataTable(userManager.ListarResultado(dataBase, table));
+            jTable1.remove(jTable1.getSelectedRow());
+            //setDataTable(userManager.ListarResultado(dataBase, table));
         }
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 
