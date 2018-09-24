@@ -262,6 +262,17 @@ public class UserManager {
         return lista;
     }
     
+    public ResultSet getResultSearch(String data){
+        try {
+            EjecutarConsulta(data);
+            ExitConection();
+        } catch (Exception e) {
+            //MessageEmergent("Fail search(): "+e.getLocalizedMessage());
+            return null;
+        }
+        return resultSet;
+    }
+    
     public ArrayList<String> getDataBases(){
         data = new ArrayList<>();
         try {
