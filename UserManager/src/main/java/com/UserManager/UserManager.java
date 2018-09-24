@@ -275,6 +275,16 @@ public class UserManager {
         return data;
     }
     
+    public ResultSet getResultDataBase(){
+        try {
+            resultSet = connectSql.connectServerMysql().createStatement().executeQuery("show databases");
+        } catch (Exception e) {
+            //MessageEmergent("getDataBases fail"+e.getMessage());
+            return null;
+        }
+        return resultSet;
+    }
+    
     public ArrayList<String> getTables(String dataBase){
         data.clear();
         try {
