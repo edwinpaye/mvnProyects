@@ -106,6 +106,17 @@ public class UserManager {
         return lista;
     }
     
+    public ResultSet getResultData(){
+        try {
+            EjecutarConsulta();
+            ExitConection();
+        } catch (Exception e) {
+//            MessageEmergent("Fail ListarResultado(): "+e.getLocalizedMessage());
+            return null;
+        }
+        return resultSet;
+    }
+    
     //el metodo muestra los nombres de campo en la base de datos
     public ArrayList<String> ListarEtiquetas(String dataBase, String table) {         
         try {
