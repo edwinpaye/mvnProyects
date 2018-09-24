@@ -129,6 +129,16 @@ public class UserManager {
         return campos;
     }
     
+    public ResultSet getResultCampos(){
+        try {
+            resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("desc "+table);
+        } catch (Exception e) {
+//            MessageEmergent("Fail ListarEtiquetas(): "+e.getLocalizedMessage());
+            return null;
+        }
+        return resultSet;
+    }
+    
     public ResultSet getData(){
         return resultSet;
     }
