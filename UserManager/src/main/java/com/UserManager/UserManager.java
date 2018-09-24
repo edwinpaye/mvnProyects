@@ -288,6 +288,16 @@ public class UserManager {
         return data;
     }
     
+    public ResultSet getResultTables(){
+        try {
+            resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("show tables");
+        } catch (Exception e) {
+            //MessageEmergent("getTables fail"+e.getMessage());
+            return null;
+        }
+        return resultSet;
+    }
+    
     public void MessageEmergent(String message){
         JOptionPane.showMessageDialog(null, message);
     }
