@@ -246,7 +246,6 @@ public class UserManager {
     
     public ArrayList<Usuario> search(String dataBase, String table, String data){
         try {
-//            resultSet = connectSql.connect().createStatement().executeQuery("select * from "+table+" where "+data);
             this.dataBase = dataBase;
             this.table = table;
             EjecutarConsulta(data);
@@ -286,14 +285,13 @@ public class UserManager {
         return data;
     }
     
-    public ResultSet getResultDataBase(){
+    public ResultSet getResultDataBases(){
         try {
-            resultSet = connectSql.connectServerMysql().createStatement().executeQuery("show databases");
+            return connectSql.connectServerMysql().createStatement().executeQuery("show databases");
         } catch (Exception e) {
             //MessageEmergent("getDataBases fail"+e.getMessage());
             return null;
         }
-        return resultSet;
     }
     
     public ArrayList<String> getTables(String dataBase){
@@ -311,12 +309,11 @@ public class UserManager {
     
     public ResultSet getResultTables(){
         try {
-            resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("show tables");
+            return connectSql.connectDataBase(dataBase).createStatement().executeQuery("show tables");
         } catch (Exception e) {
             //MessageEmergent("getTables fail"+e.getMessage());
             return null;
         }
-        return resultSet;
     }
     
     public void MessageEmergent(String message){
