@@ -170,6 +170,17 @@ public class UserManager {
         return data;
     }
     
+    public ResultSet getResultData(){
+        try {
+            resultSet.close();
+            resultSet = connectSql.connectDataBase(dataBase).createStatement().executeQuery("desc "+table);
+        } catch (Exception e) {
+//            MessageEmergent("Fail getResultData(): "+e.getLocalizedMessage());
+            return null;
+        }
+        return resultSet;
+    }
+    
     public void AddUser(String dataBase, String table, Usuario newUsuario) {
         try {
             this.dataBase = dataBase;
